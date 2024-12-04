@@ -36,7 +36,7 @@ export default function Frame() {
     <div className="w-[300px] mx-auto py-4 px-2 text-center">
       {isDevelopment && (
         <div className="bg-yellow-100 border-yellow-400 border text-yellow-700 px-4 py-2 rounded mb-4 text-sm">
-          Dev Mode | Placeholders
+          offchain
         </div>
       )}
       
