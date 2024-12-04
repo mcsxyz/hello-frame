@@ -21,7 +21,8 @@ export function frameConnector() {
         method: 'eth_requestAccounts',
       })
       if (!accounts || !Array.isArray(accounts)) {
-        throw new Error('Failed to get accounts from provider')
+        console.log('Failed to get accounts from provider')
+        return { accounts: [], chainId: 1 }
       }
 
       let currentChainId = await this.getChainId()
@@ -34,20 +35,24 @@ export function frameConnector() {
 
       return {
         accounts: accounts.map((x) => getAddress(x)),
-        chainId: currentChainId,
+        chainId: currentChainId || 1,
       }
     },
     async disconnect() {
       connected = false
     },
     async getAccounts() {
-      if (!connected) throw new Error('Not connected')
+      if (!connected) {
+        console.log('Not connected')
+        return []
+      }
       const provider = await this.getProvider()
       const accounts = await provider.request({
         method: 'eth_requestAccounts',
       })
       if (!accounts || !Array.isArray(accounts)) {
-        throw new Error('Failed to get accounts from provider')
+        console.log('Failed to get accounts from provider')
+        return []
       }
       return accounts.map((x) => getAddress(x))
     },
@@ -55,7 +60,8 @@ export function frameConnector() {
       const provider = await this.getProvider()
       const hexChainId = await provider.request({ method: 'eth_chainId' })
       if (!hexChainId) {
-        throw new Error('Failed to get chain ID from provider')
+        console.log('Failed to get chain ID from provider')
+        return 1
       }
       return fromHex(hexChainId, 'number')
     },

@@ -9,11 +9,13 @@ export default function Frame() {
   const { address } = useAccount()
 
   // Placeholder values for prototyping
-  const PLACEHOLDER_USERNAME = 'dwr.eth'
+  const PLACEHOLDER_USERNAME = 'eth.eth'
   const PLACEHOLDER_ADDRESS = '0x1234567890abcdef1234567890abcdef12345678'
 
   const displayUsername = context?.user?.username || PLACEHOLDER_USERNAME
   const displayAddress = address || PLACEHOLDER_ADDRESS
+
+  const isDevelopment = !context?.user?.username || !address
 
   useEffect(() => {
     const load = async () => {
@@ -32,6 +34,12 @@ export default function Frame() {
 
   return (
     <div className="w-[300px] mx-auto py-4 px-2 text-center">
+      {isDevelopment && (
+        <div className="bg-yellow-100 border-yellow-400 border text-yellow-700 px-4 py-2 rounded mb-4 text-sm">
+          Dev Mode | Placeholders
+        </div>
+      )}
+      
       <h1 className="text-2xl font-bold mb-8">Frames Template</h1>
       
       <div className="text-sm mb-2">
